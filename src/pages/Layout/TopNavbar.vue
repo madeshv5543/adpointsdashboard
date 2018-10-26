@@ -19,6 +19,9 @@
                         </md-autocomplete>
                     </div>
                     <md-list>
+                        <md-list-item>
+                            {{user.address}}
+                        </md-list-item>
                         <md-list-item to="/">
                             <i class="material-icons">dashboard</i>
                             <p class="hidden-lg hidden-md">Dashboard</p>
@@ -71,7 +74,8 @@
                     'Kelly Kapoor',
                     'Ryan Howard',
                     'Kevin Malone'
-                ]
+                ],
+                user:{}
             }
         },
         methods: {
@@ -82,6 +86,9 @@
               const { dispatch } = this.$store
               dispatch('authentication/logout', {root: true})
             }
+        },
+        created: function() {
+            this.user = JSON.parse(localStorage.getItem('user'));
         }
     }
 
