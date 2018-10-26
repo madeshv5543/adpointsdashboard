@@ -1,6 +1,6 @@
 import { authHeader } from '../_helpers';
 import axios from 'axios';
-const API_URL ="/api";
+const API_URL ="http://18.136.119.81:3000/api";
 export const userService = {
     getUser,
     updateUser,

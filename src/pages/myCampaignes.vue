@@ -63,7 +63,7 @@
         },
         methods: {
             getImageSrc(img) {
-                return `http://localhost:3200/static/img/${img}`
+                return `http://18.136.119.81:3000/static/img/${img}`
             },
             editCampaign(id) {
                 this.$router.push({

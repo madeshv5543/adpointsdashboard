@@ -215,11 +215,11 @@
                dispatch('user/addcampaignsponser', {id, activebalance : this.activeCampaigntotal})
             },
             getImageSrc(img) {
-                return `http://localhost:3200/static/img/${img}`
+                return `http://18.136.119.81:3000/static/img/${img}`
             },
             showImg(img) {
                 let self = this;
-                self.selectedImg = `http://localhost:3200/static/img/${img}`
+                self.selectedImg = `http://18.136.119.81:3000/static/img/${img}`
                 self.showImgModel = true
             },
             hidemodal(){
