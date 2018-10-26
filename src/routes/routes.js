@@ -12,9 +12,12 @@ import UpgradeToPRO from '@/pages/UpgradeToPRO.vue'
 import Signup from '@/pages/Signup.vue'
 import Login from '@/pages/Login.vue'
 import viewCampaign from '@/pages/viewCampaign.vue'
+import viewCampaignDetails from '@/pages/viewCampaignDetails.vue'
+import EditCampaign from '@/pages/EditCampaign.vue'
 import sponser from '@/pages/sponser.vue'
 import transfer from '@/pages/transfer.vue'
 import campaigners from '@/pages/Campaigners.vue'
+import Mycampaignes from '@/pages/myCampaignes.vue'
 import pagination from '@/pages/pagination.vue'
 
 const routes = [{
@@ -29,7 +32,8 @@ const routes = [{
       {
         path: 'user',
         name: 'User Profile',
-        component: UserProfile
+        component: UserProfile,
+        meta:{ canseeboth: true}
       },
       {
         path: 'table',
@@ -39,12 +43,14 @@ const routes = [{
       {
         path: 'addcampaign',
         name: 'AddCampaign',
-        component: AddCampaign
+        component: AddCampaign,
+        meta: {canseecampaigner: true}
       },
       {
         path: 'recepientlist',
         name: 'RecepientList',
-        component: RecepientList
+        component: RecepientList,
+        meta: {canseesponser: true}
       },
       {
         path: 'icons',
@@ -57,9 +63,22 @@ const routes = [{
         component: Transactions
       },
       {
-        path: '/viewcampaign',
+        path: '/viewcampaign/:id',
         name: 'viewCampaign',
-        component: viewCampaign
+        component: viewCampaign,
+        meta:{ canseesponser: true}
+      },
+      {
+        path: '/campaign/:id',
+        name: 'campaign',
+        component: viewCampaignDetails,
+        meta:{ canseecampaigner: true}
+      },
+      {
+        path: '/editcampaign/:id',
+        name: 'EditCampaign',
+        component: EditCampaign,
+        meta:{ canseecampaigner: true}
       },
       {
         path: '/pagination',
@@ -82,6 +101,11 @@ const routes = [{
         component: campaigners
       },
       {
+        path: '/myCampaigns',
+        name: 'MyCampaigns',
+        component: Mycampaignes
+      },
+      {
         path: 'maps',
         name: 'Maps',
         meta: {
@@ -100,6 +124,7 @@ const routes = [{
   },
   {
     path: '/login',
+    name: 'Login',
     component: Login
   },
   

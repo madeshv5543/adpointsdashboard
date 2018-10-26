@@ -1,5 +1,6 @@
 // Cards
 import ChartCard from './Cards/ChartCard.vue'
+import CampaignCard from './Cards/CampaignCard'
 import NavTabsCard from './Cards/NavTabsCard.vue'
 import StatsCard from './Cards/StatsCard.vue'
 
@@ -14,5 +15,6 @@ export {
   StatsCard,
   NavTabsTable,
   OrderedTable,
-  SimpleTable
+  SimpleTable,
+  CampaignCard
 }

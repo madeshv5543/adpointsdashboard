@@ -6,6 +6,10 @@ import App from './App'
 import VueFormWizard from 'vue-form-wizard'
 import VeeValidate from 'vee-validate';
 import Vuelidate from 'vuelidate';
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
+import VueGoodTablePlugin from 'vue-good-table';
+import VueElementLoading from 'vue-element-loading'
 
 // router setup
 import routes from './routes/routes'
@@ -22,7 +26,8 @@ import MaterialDashboard from './material-dashboard'
 
 
 import Chartist from 'chartist'
-
+import Interceptors from './_helpers/interceptors';
+Interceptors()
 
 
 // configure router
@@ -34,6 +39,11 @@ Vue.use(GlobalDirectives)
 Vue.use(Notifications)
 Vue.use(VeeValidate)
 Vue.use(Vuelidate)
+Vue.use(VueGoodTablePlugin)
+Vue.use(VueMoment, {
+  moment,
+})
+Vue.component('VueElementLoading', VueElementLoading)  
 
 
 // global library setup

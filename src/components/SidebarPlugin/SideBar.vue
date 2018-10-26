@@ -1,13 +1,13 @@
 <template>
   <div class="sidebar" :data-color="activeColor" :data-image="backgroundImage" :style="sidebarStyle">
     <div class="logo">
-      <a href="#" class="simple-text logo-mini">
+      <a  class="simple-text logo-mini">
         <div class="logo-img">
             <img :src="imgLogo" alt="">
         </div>
       </a>
 
-      <a href="https://www.creative-tim.com/product/vue-material-dashboard" target="_blank" class="simple-text logo-normal">
+      <a  class="simple-text logo-normal">
         {{title}}
       </a>
     </div>
@@ -21,6 +21,7 @@
                         :to="link.path"
                         :link="link">
           </sidebar-link>
+          <span>Log out</span>
         </slot>
       </md-list>
     </div>
@@ -38,7 +39,7 @@ export default{
   props: {
     title: {
       type: String,
-      default: 'Vue MD'
+      default: 'Ad Points'
     },
     backgroundImage: {
       type: String,

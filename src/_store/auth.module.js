@@ -24,7 +24,8 @@ export const authentication = {
                         dispatch('alert/clear', '', {root: true})
                         authService.saveToken(res)
                         commit('loginSuccess', res.data);
-                        router.push('/');
+                        dispatch('user/usertype', res.data.accountType, {root: true})
+                        router.push({name:'Dashboard'});
                     }
                 },
                 error => {
@@ -33,12 +34,13 @@ export const authentication = {
                 }
              )   
         },
-        logout({commit}) {
-            authService.logout();
+        logout({dispatch, commit}) {
             commit('logout');
+            dispatch('user/clear', {root:true});
+            dispatch('alert/clear', {root:true})
+            authService.logout();
         },
         signup({ dispatch, commit}, data) {
-            console.log("here",data)
             authService.signUp(data)
             .then(
                 res => {
@@ -49,12 +51,12 @@ export const authentication = {
                     }else {
                         dispatch('alert/clear', '', {root: true})
                         authService.saveToken(res)
+                        dispatch('user/usertype', res.data.accountType, {root: true})
                         commit('loginSuccess', res.data);
                         commit('signupSuccess', res.seed)
                     }
                 },
                 error => {
-                    console.log("err",error)
                     commit('loginFailure', error);
                     dispatch('alert/error', error, {root: true});
                 }
@@ -77,6 +79,8 @@ export const authentication = {
         logout(state) {
             state.status = {};
             state.user = null
+            state.signstep =1;
+            state.seed = null
         },
         signupSuccess(state, seed) {
             state.signstep = 2;

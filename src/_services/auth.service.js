@@ -1,4 +1,4 @@
-import { authHeader } from '../_helpers';
+import { authHeader, router } from '../_helpers';
 import axios from 'axios';
 const API_URL ="http://localhost:3200/api";
 
@@ -22,6 +22,8 @@ function signUp ( data) {
 
 function logout() {
      localStorage.removeItem('user');
+     localStorage.removeItem('token');
+     router.push({name:'Login'})
 }
 
 function saveToken(data) {

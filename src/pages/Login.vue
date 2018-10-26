@@ -1,6 +1,7 @@
 <template>
   <div class="wrapper">
-    <div class="section page-header header-filter" :style="headerStyle">
+    <div class="full-page" :style="headerStyle">
+    <div class="wrapper wrapper-full-page" >
       <div class="top">
         <div class="md-layout">
           <div class="layout md-size-33 md-small-size-66 md-xsmall-size-100 md-medium-size-40 mx-auto">
@@ -36,17 +37,18 @@
               <md-button class=" forgot md-simple md-success ">
                 Forgot password?
               </md-button>
-              <md-button  class=" pos1 md-simple md-success md-lg">
-               <router-link v-bind:to="'signup'">create new account?</router-link> 
+              <md-button @click="signup()" class=" pos1 md-simple md-success md-lg">
+               <span>create new account?</span> 
               </md-button>
                </div>
-              <md-button type="submit" class=" pos2 ">
+              <md-button  type="submit" class=" pos2 ">
                 <strong>LOGIN</strong>
               </md-button>
             </form>
           </div>
         </div>
       </div>
+    </div>
     </div>
   </div>
 </template>
@@ -92,7 +94,7 @@
         // }
       },
       signup: function() {
-        window.location.href = 'http://localhost:8080/#/signup'
+       this.$router.push({path:'/signup'})
       },
       submitForm() {
         this.submitted = true
@@ -197,7 +199,9 @@
     font-size: inherit;
   }
   .section{
-    height: -webkit-fill-available;
+      height: 100%;
+    height:stretch,;
+
   }
   
   .error {

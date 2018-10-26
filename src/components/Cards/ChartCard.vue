@@ -1,105 +1,110 @@
 <template>
-  <md-card>
-    
-    <md-card-header class="card-chart" :data-background-color="dataBackgroundColor">
-    <div class="hello">
-     
- <img :src="chartImage"  >
-      
- </div>
-      
-    </md-card-header>
+    <md-card>
 
-    <md-card-content>
-      <slot name="content"></slot>
-    </md-card-content>
+        <md-card-header class="card-chart">
+            <div class="hello">
 
-    <md-card-actions md-alignment="left">
-      <slot name="footer"></slot>
-    </md-card-actions>
-  </md-card>
+                <img :src="getImageSrc(campaign.campaignImage)">
+
+            </div>
+
+        </md-card-header>
+
+        <md-card-content class="txt-ov">
+            <div class="md-card-action-buttons text-center">
+                <!----><button @click="viewCampaign(campaign._id)" type="button" title="View" class="md-button md-simple md-just-icon md-theme-default">
+                    <div class="md-ripple">
+                        <div class="md-button-content"><i class="md-icon md-icon-font md-theme-default">art_track</i></div>
+                    </div>
+                </button>
+            </div>
+            <h4>{{campaign.title}}</h4>
+            <p>{{campaign.description}}</p>
+        </md-card-content>
+        <div class="md-card-actions md-alignment-space-between">
+            <div class="price">
+                <h4>{{campaign.value}}</h4>
+            </div>
+            <div class="stats">
+                <p class="category"><i class="md-icon md-icon-font md-theme-default">place</i>
+                    {{campaign.place}}
+                </p>
+            </div>
+        </div>
+    </md-card>
 </template>
 <script>
-export default {
-  name: 'chart-card',
-  props: {
-    footerText: {
-      type: String,
-      default: ''
-    },
-    headerTitle: {
-      type: String,
-      default: 'Chart title'
-    },
-    chartType: {
-      type: String,
-      
-    },
-    chartImage: {
-     type: String
-    },
-    chartOptions: {
-      type: Object,
-      default: () => {
-        return {}
-      }
-    },
-    chartResponsiveOptions: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    },
-    chartData: {
-      type: Object,
-      default: () => {
-        return {
-          labels: [],
-          series: []
-        }
-      }
-    },
-    dataBackgroundColor: {
-      type: String,
-      default: ''
-    }
-  },
-  data () {
-    return {
-      chartId: 'no-id'
-    }
-  },
-  methods: {
-    /***
-     * Initializes the chart by merging the chart options sent via props and the default chart options
-     */
-    initChart () {
-      var chartIdQuery = `#${this.chartId}`
-      this.$Chartist[this.chartType](chartIdQuery, this.chartData, this.chartOptions)
-    },
-    /***
-     * Assigns a random id to the chart
-     */
-    updateChartId () {
-      var currentTime = new Date().getTime().toString()
-      var randomInt = this.getRandomInt(0, currentTime)
-      this.chartId = `div_${randomInt}`
-    },
-    getRandomInt (min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min
-    }
-  },
-  mounted () {
-    this.updateChartId()
-    this.$nextTick(this.initChart)
-  }
-}
-</script>
-<style>
+    export default {
+        name: 'chart-card',
+        props: {
+            campaign: {
+                type: Object
+            },
+            dataBackgroundColor: {
+                type: String,
+                default: ''
+            }
+        },
+        data() {
+            return {
+                chartId: 'no-id'
+            }
+        },
+        methods: {
+            getImageSrc(img) {
+                return `http://localhost:3200/static/img/${img}`
+            },
+            viewCampaign(id) {
+                let self = this;
+                self.$router.push({
+                    name: 'viewCampaign',
+                    params: {
+                        id
+                    }
+                })
+            }
+        },
+        mounted() {
 
-.hello{
-  
-  height:120px;
- 
+        }
+    }
+
+</script>
+<style scoped>
+    .md-card img {
+        width: 100%;
+        height: 200px;
+    }
+
+    .md-card .price {
+        color: #000000;
+        font-size: 18px;
+    }
+
+    .txt-ov {
+        overflow: hidden;
+        height: 200px
+    }
+
+    /* .hello:hover{
+    transform: translate3d(0,-50px,0);
+} */
+
+    /* .md-card .md-card-action-buttons {
+    left: 15px;
+    position: absolute;
+    text-align: center;
+    top: 140px;
+    width: calc(100% - 30px);
+    z-index: -1;
 }
+
+ .card-chart:hover{
+        transform: translate3d(0,-50px,0);
+}
+
+.md-card-action-buttons:hover .card-chart {
+    transform: translate3d(0,-50px,0);
+} */
+
 </style>
