@@ -19,7 +19,7 @@
                     </template>
                 </stats-card>
             </div>
-            <div v-if="usertype == 'Sponser'" class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33.33">
+            <div v-if="usertype.toLowerCase() == 'Sponser'.toLowerCase()" class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33.33">
                 <stats-card data-background-color="green">
                     <template slot="header">
                         <md-icon>store</md-icon>
@@ -37,7 +37,7 @@
                     </template>
                 </stats-card>
             </div>
-            <div v-if="usertype == 'Sponser'" class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33.33">
+            <div v-if="usertype.toLowerCase() == 'Sponser'.toLowerCase()" class="md-layout-item md-medium-size-50 md-xsmall-size-100 md-size-33.33">
                 <stats-card data-background-color="green">
                     <template slot="header">
                         <md-icon>money</md-icon>
@@ -56,7 +56,7 @@
                 </stats-card>
             </div>
 
-            <div v-if="usertype == 'Sponser'" class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
+            <div v-if="usertype.toLowerCase() == 'Sponser'.toLowerCase()" class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
                 <md-card>
                     <md-card-header data-background-color="orange">
                         <h4 class="title">Transactions</h4>
@@ -68,7 +68,7 @@
                 </md-card>
             </div>
 
-            <div  v-if="usertype == 'Sponser'" class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
+            <div  v-if="usertype.toLowerCase() == 'Sponser'.toLowerCase()" class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-100">
                 <md-card>
                     <md-card-header data-background-color="orange">
                         <h4 class="title">Active Campaigns</h4>
@@ -186,7 +186,7 @@
                 dispatch
             } = this.$store;
             dispatch('user/balance')
-            if(this.usertype == 'Sponser') {
+            if(this.usertype.toLowerCase() == 'Sponser'.toLowerCase()) {
             dispatch('user/activecampaigns')
             dispatch('user/activecampaigntotal')
             }

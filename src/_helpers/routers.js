@@ -24,7 +24,7 @@ router.beforeEach((to, from, next) => {
     }
 
     if(to.meta.canseesponser) {
-        if(loggedIn.accountType === 'Sponser') {
+        if(loggedIn.accountType.toLowerCase() === 'Sponser'.toLowerCase()) {
             return next()
         }else {
             return next('dashboard')
@@ -32,7 +32,7 @@ router.beforeEach((to, from, next) => {
     }
 
     if(to.meta.canseecampaigner) {
-        if(loggedIn.accountType === 'campaigner') {
+        if(loggedIn.accountType.toLowerCase() === 'campaigner'.toLowerCase()) {
             return next()
         }else {
             return next('dashboard')

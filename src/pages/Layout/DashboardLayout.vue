@@ -12,19 +12,19 @@
                 <md-icon>person</md-icon>
                 <p>My Account</p>
             </sidebar-link>
-            <sidebar-link v-if="usertype === 'campaigner'" to="/addcampaign">
+            <sidebar-link v-if="usertype.toLowerCase() === 'campaigner'.toLowerCase()" to="/addcampaign">
                 <md-icon>add</md-icon>
                 <p>Add Campaign</p>
             </sidebar-link>
-            <sidebar-link v-if="usertype === 'Sponser'" to="/recepientlist">
+            <sidebar-link v-if="usertype.toLowerCase() === 'Sponser'.toLowerCase()" to="/recepientlist">
                 <md-icon>library_books</md-icon>
                 <p>Recepient List</p>
             </sidebar-link>
-            <sidebar-link v-if="usertype === 'Sponser'" to="/campaigners">
+            <sidebar-link v-if="usertype.toLowerCase() === 'Sponser'.toLowerCase()" to="/campaigners">
                 <md-icon>library_books</md-icon>
                 <p>Sponsered Campaigners</p>
             </sidebar-link>
-            <sidebar-link v-if="usertype === 'campaigner'" to="/myCampaigns">
+            <sidebar-link v-if="usertype.toLowerCase() === 'campaigner'.toLowerCase()" to="/myCampaigns">
                 <md-icon>library_books</md-icon>
                 <p>My Campaigns</p>
             </sidebar-link>
