@@ -18,11 +18,11 @@
             </sidebar-link>
             <sidebar-link v-if="usertype.toLowerCase() === 'Sponser'.toLowerCase()" to="/recepientlist">
                 <md-icon>library_books</md-icon>
-                <p>Recepient List</p>
+                <p>Campaigns List</p>
             </sidebar-link>
             <sidebar-link v-if="usertype.toLowerCase() === 'Sponser'.toLowerCase()" to="/campaigners">
                 <md-icon>library_books</md-icon>
-                <p>Sponsered Campaigners</p>
+                <p>Sponsered Campaigns</p>
             </sidebar-link>
             <sidebar-link v-if="usertype.toLowerCase() === 'campaigner'.toLowerCase()" to="/myCampaigns">
                 <md-icon>library_books</md-icon>

@@ -1,6 +1,6 @@
 import { authHeader } from '../_helpers';
 import axios from 'axios';
-const API_URL ="http://18.136.119.81:3000/api";
+import { params} from '../_helpers';
 export const userService = {
     getUser,
     updateUser,
@@ -22,7 +22,7 @@ export const userService = {
 
 function getUser () {
     const header = { "headers":authHeader()}
-    return axios.get(`${API_URL}/user`,header).then( res => res.data)
+    return axios.get(`${params.APIURL}/user`,header).then( res => res.data)
 }
 
 function updateUser(data) {
@@ -30,7 +30,7 @@ function updateUser(data) {
         "headers":authHeader(),
         'Content-Type': 'multipart/form-data'
     }
-    return axios.post(`${API_URL}/edituser`, data, header).then( res => res.data)
+    return axios.post(`${params.APIURL}/edituser`, data, header).then( res => res.data)
 }
 
 function addCampaign(data) {
@@ -38,21 +38,21 @@ function addCampaign(data) {
         "headers":authHeader(),
         'Content-Type': 'multipart/form-data'
     }
-    return axios.post(`${API_URL}/addCampaign`, data, header).then(res => res.data)
+    return axios.post(`${params.APIURL}/addCampaign`, data, header).then(res => res.data)
 }
 
 function getcampainerCampaigns() {
     const header = {
         "headers":authHeader()
     }
-    return axios.get(`${API_URL}/sponseredCampaign`, header).then(res => res.data)
+    return axios.get(`${params.APIURL}/sponseredCampaign`, header).then(res => res.data)
 }
 
 function getpendingCampaign() {
     const header= {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/getPendingCamapigns`, header).then(res => res.data)
+    return axios.get(`${params.APIURL}/getPendingCamapigns`, header).then(res => res.data)
 }
 
 function getCampaignDetails(id) {
@@ -60,28 +60,28 @@ function getCampaignDetails(id) {
     const header = {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/campaigndetails/${id}`, header).then(res => res.data)
+    return axios.get(`${params.APIURL}/campaigndetails/${id}`, header).then(res => res.data)
 }
 
 function getCampainerCampaignDetails(id) {
     const header = {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/usercampaigndetails/${id}`, header).then(res => res.data)
+    return axios.get(`${params.APIURL}/usercampaigndetails/${id}`, header).then(res => res.data)
 }
 
 function sponserCampaign({id, activebalance}) {
     const header = {
         "headers": authHeader()
     }
-    return axios.post(`${API_URL}/sponsercampaign/${id}`,{activeTotal: activebalance}, header).then(res => res.data)
+    return axios.post(`${params.APIURL}/sponsercampaign/${id}`,{activeTotal: activebalance}, header).then(res => res.data)
 }
 
 function getActiveCampaigns() {
     const header = {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/sponserActiveCampaign`, header).then(res => res.data)
+    return axios.get(`${params.APIURL}/sponserActiveCampaign`, header).then(res => res.data)
 }
 
 
@@ -89,21 +89,21 @@ function activeCampaignTotal() {
     const header = {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/sponserDashboard`, header).then( res => res.data)
+    return axios.get(`${params.APIURL}/sponserDashboard`, header).then( res => res.data)
 }
 
 function getBalance() {
     const header= {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/balance`, header).then(res =>  res.data)
+    return axios.get(`${params.APIURL}/balance`, header).then(res =>  res.data)
 }
 
 function getMyCampaigns() {
     const header = {
         "headers": authHeader()
     }
-    return axios.get(`${API_URL}/mycampaigns`, header).then(res =>  res.data)
+    return axios.get(`${params.APIURL}/mycampaigns`, header).then(res =>  res.data)
 }
 
 function updateCampaign(data, id) {
@@ -111,7 +111,7 @@ function updateCampaign(data, id) {
         "headers": authHeader(),
         'Content-Type': 'multipart/form-data'
     }
-    return axios.post(`${API_URL}/updateCampaign/${id}`, data, header).then( res => res.data)
+    return axios.post(`${params.APIURL}/updateCampaign/${id}`, data, header).then( res => res.data)
 }
 
 function addeventToCampaign(data) {
@@ -119,16 +119,16 @@ function addeventToCampaign(data) {
         "headers": authHeader(),
         'Content-Type': 'multipart/form-data'
     }
-    return axios.post(`${API_URL}/addevent`, data, header).then( res => res.data)
+    return axios.post(`${params.APIURL}/addevent`, data, header).then( res => res.data)
 }
 
 function transfer(data) {
     const header = {
         "headers": authHeader()
     }
-    return axios.post(`${API_URL}/transfer`, data, header).then( res => res.data)
+    return axios.post(`${params.APIURL}/transfer`, data, header).then( res => res.data)
 }
 
 function getcountries() {
-    return axios.get('https://restcountries.eu/rest/v1/all').then(res => res.data)
+    return axios.get(params.COUNTRYURL).then(res => res.data)
 }

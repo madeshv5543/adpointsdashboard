@@ -11,7 +11,15 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </md-button>
-
+                        <md-dialog :md-active.sync="showQr" >
+                       <md-dialog-title>QR code</md-dialog-title>
+                       <div class="qrcode">
+                          <qrcode  :value="user.address" :options="{ size: 200 }"></qrcode>
+                          <br>
+                          <p class="qr_addr">
+                           {{user.address}}</p>
+                       </div>
+                        </md-dialog>
                 <div class="md-collapse">
                     <div class="md-autocomplete">
                         <md-autocomplete class="search" v-model="selectedEmployee" :md-options="employees">
@@ -21,6 +29,11 @@
                     <md-list>
                         <md-list-item>
                             {{user.address}}
+                        </md-list-item>
+                        <md-list-item @click="showQrModel">
+                             <i class="material-icons">border_clear</i>
+                            <!-- <qrcode  value="Hello, World!" :options="{ size: 20 }"></qrcode> -->
+                             <p class="hidden-lg hidden-md">QR code</p>
                         </md-list-item>
                         <md-list-item to="/">
                             <i class="material-icons">dashboard</i>
@@ -75,12 +88,17 @@
                     'Ryan Howard',
                     'Kevin Malone'
                 ],
-                user:{}
+                user:{},
+                showQr:false
             }
         },
         methods: {
             toggleSidebar() {
                 this.$sidebar.displaySidebar(!this.$sidebar.showSidebar)
+            },
+            showQrModel () {
+                this.showQr =true
+                console.log("model open")
             },
             logOut() {
               const { dispatch } = this.$store
@@ -95,4 +113,10 @@
 </script>
 
 <style lang="css">
+.qrcode {
+    text-align: center
+}
+.qr_addr{
+    padding: 15px
+}
 </style>

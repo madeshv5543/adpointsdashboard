@@ -1,6 +1,6 @@
 import { authHeader, router } from '../_helpers';
 import axios from 'axios';
-const API_URL ="http://18.136.119.81:3000/api";
+import { params} from '../_helpers';
 
 export const authService = {
     login,
@@ -11,12 +11,12 @@ export const authService = {
 
 function login (data) {
     let self = this;
-    const URL = `${API_URL}/login`
+    const URL = `${params.APIURL}/login`
     return axios.post(URL, data).then( res => res.data)
 }
 
 function signUp ( data) {
-    const URL = `${API_URL}/signUp`;
+    const URL = `${params.APIURL}/signUp`;
     return axios.post(URL, data).then( res => res.data)
 }
 
