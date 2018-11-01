@@ -375,7 +375,7 @@
         height: 150px !important;
     }
 
-    dropbox {
+    .dropbox {
         outline: 2px dashed grey;
         /* the dash box */
         outline-offset: -10px;
