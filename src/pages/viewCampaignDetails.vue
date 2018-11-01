@@ -151,7 +151,7 @@
                 </md-card>
             </div>
         </div>
-        <div class="md-layout" v-if="campaign && campaign.images.length">
+        <div class="md-layout" v-if="campaign && campaign.images && campaign.images.length">
             <div class="md-layout-item">
                 <md-card>
                     <md-card-header data-background-color="green">

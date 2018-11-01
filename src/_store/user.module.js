@@ -377,8 +377,11 @@ export const user = {
         uploadstatus(state, data) {
             state.currentStatus = data
         },
-        emptydeletarray(state) {
+        emptydeletarray(state, data = []) {
             state.deleteimagArray = []
+        },
+        additemDelete(state, data) {
+            state.deleteimagArray.push(data)
         }
     }
 }

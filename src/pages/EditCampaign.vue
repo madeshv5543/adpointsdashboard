@@ -239,12 +239,14 @@
                 self.camimg = e.target.files[0]
             },
             addtodelete(img){
+                const { commit } = this.$store
                 if(this.deleteArray.includes(img)) {
-                    this.deleteArray = this.deleteArray.filter(n => {
+                    let samarray = this.deleteArray.filter(n => {
                       return  n != img
                     })
+                    commit('user/emptydeletarray', samarray)
                 }else {
-                    this.deleteArray.push(img)
+                    commit('user/additemDelete', img)
                 }
             },
             removeimage() {

@@ -180,7 +180,7 @@
                 </md-card>
             </div>
         </div>
-        <div class="md-layout" v-if="campaign && campaign.images.length">
+        <div class="md-layout" v-if="campaign && campaign.images && campaign.images.length">
             <div class="md-layout-item">
                 <md-card>
                     <md-card-header data-background-color="green">
@@ -331,7 +331,7 @@
             },
             images() {
                 let images = [];
-                if(this.campaign.images) {
+                if(this.campaign && this.campaign.images) {
                     images = this.campaign.images.map(n => {
                         return `${CONFIG.IMGURL}/${n}`
                     });
