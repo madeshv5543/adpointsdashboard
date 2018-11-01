@@ -1,5 +1,6 @@
 <template>
     <form>
+         <vue-element-loading :active="loading" spinner="bar-fade-scale" color="#5dc596" :is-full-screen="true" />
         <md-card>
             <md-card-header data-background-color="orange">
                 <h4 class="title">Add Compaign</h4>
@@ -135,7 +136,10 @@
         computed: {
           alert() {
             return this.$store.state.alert
-          }
+          },
+          loading() {
+                return this.$store.state.user.loading
+          },
         }
     }
 

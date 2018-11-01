@@ -4,13 +4,16 @@ const initialstate = {
     campaigns:[],
     allcampaigns: [],
     selectedCampaign:null,
+    campaignImgs:[],
     mycampaigns:[],
     usertype:null,
     ActiveCampaigns:[],
     activeCampaigntotal:0,
     balance:0,
     loading:false,
-    country:[]
+    country:[],
+    deleteimagArray:[],
+    currentStatus:0
 }
 export const user = {
     namespaced: true,
@@ -55,10 +58,12 @@ export const user = {
                 }
             )
         },
-        addcampaign({dispatch}, data) {
+        addcampaign({dispatch, commit}, data) {
+            commit('setloading', true)
             userService.addCampaign(data)
             .then(
                 res => {
+                    commit('setloading', false)
                     if(res.status != 200) {
                         dispatch('alert/error', res.message, {root: true});
                     }else{
@@ -68,6 +73,7 @@ export const user = {
                     }
                 },
                 err => {
+                    commit('setloading', false)
                     dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
                 }
             )
@@ -217,10 +223,11 @@ export const user = {
             commit('clearstate')
         },
         updatecampaign({dispatch, commit}, {data, id}) {
-            console.log("campaign id", id)
+            commit('setloading', true)
             userService.updateCampaign(data, id)
             .then(
                 res => {
+                    commit('setloading', false)
                     if(res.status != 200) {
                         dispatch('alert/error', res.message, {root: true});
                     }else{
@@ -230,14 +237,17 @@ export const user = {
                     }
                 },
                 err => {
+                    commit('setloading', false)
                     dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
                 }
             )
         },
         addevent({dispatch, commit}, {formdata, id}) {
+            commit('setloading', true)
             userService.addeventToCampaign(formdata)
             .then(
                 res => {
+                    commit('setloading', false)
                     if(res.status != 200) {
                         dispatch('alert/error', res.message, {root: true});
                     }else {
@@ -247,6 +257,7 @@ export const user = {
                     }
                 },
                 err => {
+                    commit('setloading', false)
                     dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
                 }
             )
@@ -267,7 +278,7 @@ export const user = {
                 },
                 err => {
                     commit('setloading', false)
-                    console.log('err',err)
+                    dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
                 }
             )
         },
@@ -279,7 +290,49 @@ export const user = {
                     commit('setCountry', res)
                 },
                 err => {
-                    console.log("err",err)
+                    dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
+                }
+            )
+        },
+        addcampaignimg( {commit, dispatch}, data) {
+            userService.addimagesTocampaign(data)
+            .then(
+                res => {
+                    commit('setloading', false)
+                    if(res.status != 200) {
+                        commit('uploadstatus', 3)
+                        dispatch('alert/error', res.message, {root: true});
+                    }else {
+                        commit('uploadstatus', 2)
+                        dispatch('alert/clear', '', {root: true})
+                        dispatch('alert/success', 'Images uploded successfully.', {root: true});
+                        dispatch('getCampainerCampaignDetails', data.id)
+                    }
+                },
+                err => {
+                    commit('setloading', false)
+                    commit('uploadstatus', 3)
+                    dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
+                }
+            )
+        },
+        deletecamapignimgs( {commit, dispatch}, data) {
+            userService.deletecamapignimgs(data)
+            .then(
+                res => {
+                    commit('setloading', false)
+                    if(res.status != 200) {
+                        dispatch('alert/error', res.message, {root: true});
+                    }else {
+                        commit('emptydeletarray')
+                        dispatch('alert/clear', '', {root: true})
+                        dispatch('alert/success', 'Images removed successfully.', {root: true});
+                        dispatch('getCampainerCampaignDetails', data.id)
+                    }
+                },
+                err => {
+                    commit('setloading', false)
+                    dispatch('alert/error', 'Something Went wrong, Please try after sometime.', {root: true});
                 }
             )
         }
@@ -320,6 +373,12 @@ export const user = {
         },
         setCountry(state, data) {
             state.country = data
+        },
+        uploadstatus(state, data) {
+            state.currentStatus = data
+        },
+        emptydeletarray(state) {
+            state.deleteimagArray = []
         }
     }
 }

@@ -17,7 +17,9 @@ export const userService = {
     getCampainerCampaignDetails,
     addeventToCampaign,
     transfer,
-    getcountries
+    getcountries,
+    addimagesTocampaign,
+    deletecamapignimgs
 }
 
 function getUser () {
@@ -120,6 +122,21 @@ function addeventToCampaign(data) {
         'Content-Type': 'multipart/form-data'
     }
     return axios.post(`${params.APIURL}/addevent`, data, header).then( res => res.data)
+}
+
+function addimagesTocampaign(data) {
+    const header = {
+        "headers": authHeader(),
+        'Content-Type': 'multipart/form-data'
+    }
+    return axios.post(`${params.APIURL}/addImages/${data.id}`, data.formData, header).then( res => res.data)
+}
+
+function deletecamapignimgs(data) {
+    const header = {
+        "headers": authHeader(),
+    }
+    return axios.post(`${params.APIURL}/deleteimgs/${data.id}`, {images: data.images}, header).then( res => res.data)
 }
 
 function transfer(data) {

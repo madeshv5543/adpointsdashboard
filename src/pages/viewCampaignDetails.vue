@@ -1,5 +1,6 @@
 <template>
-    <div class="content">
+    <div class="content" v-if="campaign">
+        <gallery :images="images" :index="index" @close="index = null"></gallery>
         <div class="md-layout">
             <div class="md-layout-item">
                 <md-card>
@@ -8,7 +9,8 @@
                     </md-card-header>
                     <md-card-content>
                         <div class="row">
-                            <vue-element-loading :active="loading" spinner="bar-fade-scale" color="#5dc596"   :is-full-screen="true"/>
+                            <vue-element-loading :active="loading" spinner="bar-fade-scale" color="#5dc596"
+                                :is-full-screen="true" />
                             <div v-if="alert.message" :class="`alert ${alert.type}`">{{alert.message}}</div>
                             <div v-if="campaign" id="typography">
                                 <div class="row">
@@ -37,17 +39,17 @@
                                             <b> Sponser Details: </b>
                                         </h3>
                                         <h4>
-                                          Name : {{campaign.user.firstName}} {{campaign.user.lastName}}
+                                            Name : {{campaign.user.firstName}} {{campaign.user.lastName}}
                                         </h4>
                                         <h4>
-                                           Address : {{campaign.user.physicaladdress}}
+                                            Address : {{campaign.user.physicaladdress}}
                                         </h4>
                                         <h4 style="text-indent: 30px;"> {{campaign.user.city}}
                                             -{{campaign.user.pincode}}
                                         </h4>
                                         <h4 style="text-indent: 30px;"> {{campaign.user.country}} </h4>
                                         <h4>
-                                            Email : {{campaign.user.email}} 
+                                            Email : {{campaign.user.email}}
                                         </h4>
                                         <h4>
                                             Company Name : {{campaign.user.companyName}}
@@ -98,24 +100,24 @@
                 </md-card>
             </div>
         </div>
-        <md-dialog :md-active.sync="showImgModel" >
+        <md-dialog :md-active.sync="showImgModel">
             <img :src="selectedImg">
         </md-dialog>
-        <div class="md-layout" >
-            <div class="md-layout-item" >
+        <div class="md-layout">
+            <div class="md-layout-item">
                 <md-card>
                     <md-card-header data-background-color="green">
                         <h4 class="title">Campaign Timeline</h4>
                     </md-card-header>
                     <md-card-content>
                         <div id="timeline-template">
-                            <ul class="timeline"  v-if="campaign.events.length">
+                            <ul class="timeline" v-if="campaign.events.length">
                                 <li v-for="item in campaign.events" :key="item._id" lass="timeline-item">
                                     <div v-if="item.image" @click="showImg(item.image)" :class="'timeline-badge ' ">
-                                       <img  :src="getImageSrc(item.image)">
+                                        <img :src="getImageSrc(item.image)">
                                     </div>
-                                    <div v-if="!item.image"  :class="'timeline-badge ' ">
-                                       <img  :src="defaultchat">
+                                    <div v-if="!item.image" :class="'timeline-badge ' ">
+                                        <img :src="defaultchat">
                                     </div>
                                     <div class="timeline-panel" :class="getmsgclass(item.from, campaign.user.address)">
                                         <div class="timeline-heading">
@@ -128,19 +130,46 @@
                                         </div>
                                         <div class="timeline-body">
                                             <div>{{ item.description }}</div>
-                                        <div v-if="item.from" class="recname"> 
-                                            <span class="sender" v-if="item.from !== campaign.user.address" > By you</span>
-                                            <span class="receiver" v-if="item.from === campaign.user.address" > By {{campaign.user.firstName}}</span>
-                                        </div>
+                                            <div v-if="item.from" class="recname">
+                                                <span class="sender" v-if="item.from !== campaign.user.address"> By you</span>
+                                                <span class="receiver" v-if="item.from === campaign.user.address"> By
+                                                    {{campaign.user.firstName}}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                         </div>
                         <div v-if="campaign && campaign.status == 'Completed' " class="alert alert-info">
-                            <p class="txhash"> Transaction completed successfully. Transaction Reference number <a :href="`http://explorer.evenscoin.io/tx/${campaign.txhash.trim()}`"> {{campaign.txhash}} </a></p>
+                            <p class="txhash"> Transaction completed successfully. Transaction Reference number <a
+                                    :href="`http://explorer.evenscoin.io/tx/${campaign.txhash.trim()}`">
+                                    {{campaign.txhash}} </a></p>
                         </div>
-                        <md-button v-if="campaign.status != 'Completed' " class="md-success md-raised" @click="showDialog = true">Add Event</md-button>
+                        <md-button v-if="campaign.status != 'Completed' " class="md-success md-raised" @click="showDialog = true">Add
+                            Event</md-button>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
+        <div class="md-layout" v-if="campaign && campaign.images.length">
+            <div class="md-layout-item">
+                <md-card>
+                    <md-card-header data-background-color="green">
+                        <h4 class="title">Campaign Image Gallery</h4>
+                    </md-card-header>
+                    <md-card-content>
+                        <div class="md-layout">
+                            <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-20" v-for="(image, imageIndex) in images"
+                                :key="imageIndex">
+                                <md-card class="cusmd">
+                                    <md-card-header class="card-chart">
+                                        <div class="hello">
+                                            <img @click="index = imageIndex" class="gaimg" :src="image" style="height:150px !important">
+                                        </div>
+                                    </md-card-header>
+                                </md-card>
+                            </div>
+                        </div>
                     </md-card-content>
                 </md-card>
             </div>
@@ -149,6 +178,8 @@
 </template>
 
 <script>
+    const params = require('../_helpers/config.js');
+    const CONFIG = params.params; 
     export default {
         props: {
             dataBackgroundColor: {
@@ -158,16 +189,22 @@
             defaultchat: {
                 type: String,
                 default: require('@/assets/img/chatimg.jpg')
-            }
+            },
+            gallery: {
+                type: String,
+                default: require('@/assets/img/gallery.jpg')
+            },
         },
         data() {
             return {
                 event: {},
-                eventimg:null,
+                eventimg: null,
                 backdrop: false,
                 showDialog: false,
-                eventfile:null,
-                showImgModel:false,
+                eventfile: null,
+                showImgModel: false,
+                selectedImg: null,
+                index: null
             }
         },
         methods: {
@@ -178,42 +215,44 @@
                 dispatch('user/addcampaignsponser', id)
             },
             getmsgclass(a, b) {
-              return  a === b ? 'rec' : 'send'
+                return a === b ? 'rec' : 'send'
             },
             getImageSrc(img) {
-                return `http://18.136.119.81:3000/static/img/${img}`
+                return `${CONFIG.IMGURL}/${img}`
             },
-            hideModal(){
+            hideModal() {
                 let self = this;
-                self.showDialog= false;
-                self.event={}
+                self.showDialog = false;
+                self.event = {}
             },
             addevent() {
                 let self = this;
                 this.$validator.validateAll()
-                .then(
-                    res => {
-                        if(res) {
-                            let formdata = new FormData();
-                            const {
-                                title,
-                                description
-                            } = self.event;
-                            formdata.append('title', title)
-                            formdata.append('description', description)
-                            formdata.append('eventimg', self.eventimg)
-                            formdata.append('id', self.campaign._id)
-                            const {dispatch} = self.$store;
-                            self.showDialog = false;
-                            self.event ={}
-                            dispatch('user/addevent', {
-                                formdata,
-                                id: self.campaign._id
-                            })
+                    .then(
+                        res => {
+                            if (res) {
+                                let formdata = new FormData();
+                                const {
+                                    title,
+                                    description
+                                } = self.event;
+                                formdata.append('title', title)
+                                formdata.append('description', description)
+                                formdata.append('eventimg', self.eventimg)
+                                formdata.append('id', self.campaign._id)
+                                const {
+                                    dispatch
+                                } = self.$store;
+                                self.showDialog = false;
+                                self.event = {}
+                                dispatch('user/addevent', {
+                                    formdata,
+                                    id: self.campaign._id
+                                })
 
+                            }
                         }
-                    }
-                )
+                    )
             },
             handleFileUpload(e) {
                 let self = this;
@@ -221,7 +260,7 @@
             },
             showImg(img) {
                 let self = this;
-                self.selectedImg = `http://18.136.119.81:3000/static/img/${img}`
+                self.selectedImg = `${CONFIG.IMGURL}/${img}`
                 self.showImgModel = true
             },
         },
@@ -234,6 +273,15 @@
             },
             loading() {
                 return this.$store.state.user.loading
+            },
+            images() {
+                let images = [];
+                if (this.campaign.images) {
+                    images = this.campaign.images.map(n => {
+                        return `${CONFIG.IMGURL}/${n}`
+                    });
+                }
+                return images
             }
         },
         created: function () {
@@ -258,32 +306,42 @@
     .md-dialog {
         min-width: 500px !important
     }
+
     .recname span {
         float: right;
     }
-    .txhash{
+
+    .txhash {
         font-size: 16px;
         font-weight: bold;
     }
+
     .recname .receiver {
         color: #08d649d4;
         font-weight: bold;
     }
+
     .recname .sender {
         color: #b91313d4;
         font-weight: bold;
     }
+
     .md-card img {
         height: 300px !important;
     }
 
-    .timeline-badge img{
+    .timeline-badge img {
         height: 60px !important;
         border-radius: 50%
     }
 
     .addec {
         padding: 30px
+    }
+
+    .gaimg {
+        width: 100%;
+        height: 200px !important;
     }
 
     .md-datepicker-header {

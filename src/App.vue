@@ -19,6 +19,13 @@
     .vgt-table {
         border: none !important
     }
+    .md-datepicker-dialog.md-theme-default .md-datepicker-day-button.md-datepicker-selected{
+            background-color: #9c27b0 !important
+    }
+
+    .md-datepicker-dialog.md-theme-default .md-datepicker-header{
+           background-color: #9c27b0 !important
+    }
 
     .vgt-table thead th {
         background: white;

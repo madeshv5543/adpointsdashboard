@@ -1,5 +1,6 @@
 <template>
-    <div class="content">
+    <div class="content" v-if="campaign">
+         <gallery :images="images" :index="index" @close="index = null"></gallery>
         <div class="md-layout">
             <div class="md-layout-item">
                    <vue-element-loading :active="loading" spinner="bar-fade-scale" color="#5dc596"   :is-full-screen="true"/>
@@ -62,7 +63,6 @@
                                         </div>
                                     </button>
                                 </div>
-
                             </div>
 
                         </div>
@@ -129,7 +129,7 @@
                             </form>
                         </md-dialog>
                         <md-dialog :md-active.sync="showImgModel" >
-                            <img :src="selectedImg">
+                            <img v-if="selectedImg" :src="selectedImg">
                         </md-dialog>
                         <div>
                             <md-dialog :md-active.sync="showCommentDialog" :md-backdrop="backdrop">
@@ -180,11 +180,36 @@
                 </md-card>
             </div>
         </div>
+        <div class="md-layout" v-if="campaign && campaign.images.length">
+            <div class="md-layout-item">
+                <md-card>
+                    <md-card-header data-background-color="green">
+                        <h4 class="title">Campaign Image Gallery</h4>
+                    </md-card-header>
+                    <md-card-content>
+                        <div class="md-layout">
+                            <div class="md-layout-item md-medium-size-100 md-xsmall-size-100 md-size-20" v-for="(image, imageIndex) in images"
+                                :key="imageIndex">
+                                <md-card class="cusmd">
+                                    <md-card-header class="card-chart">
+                                        <div class="hello">
+                                            <img @click="index = imageIndex" class="gaimg" :src="image" style="height:150px !important">
+                                        </div>
+                                    </md-card-header>
+                                </md-card>
+                            </div>
+                        </div>
+                    </md-card-content>
+                </md-card>
+            </div>
+        </div>
 
     </div>
 </template>
 
 <script>
+    const params = require('../_helpers/config.js');
+    const CONFIG = params.params; 
     export default {
         props: {
             dataBackgroundColor: {
@@ -206,7 +231,8 @@
                 password:"",
                 selectedImg:null,
                 showImgModel:false,
-                isActive:false
+                isActive:false,
+                index:null
             }
         },
         methods: {
@@ -215,11 +241,11 @@
                dispatch('user/addcampaignsponser', {id, activebalance : this.activeCampaigntotal})
             },
             getImageSrc(img) {
-                return `http://18.136.119.81:3000/static/img/${img}`
+                return `${CONFIG.IMGURL}/${img}`
             },
             showImg(img) {
                 let self = this;
-                self.selectedImg = `http://18.136.119.81:3000/static/img/${img}`
+                self.selectedImg = `${CONFIG.IMGURL}/${img}`
                 self.showImgModel = true
             },
             hidemodal(){
@@ -302,6 +328,15 @@
             },
             activeCampaigntotal() {
                 return this.$store.state.user.activeCampaigntotal
+            },
+            images() {
+                let images = [];
+                if(this.campaign.images) {
+                    images = this.campaign.images.map(n => {
+                        return `${CONFIG.IMGURL}/${n}`
+                    });
+                }
+                return images
             }
         },
         created: function () {

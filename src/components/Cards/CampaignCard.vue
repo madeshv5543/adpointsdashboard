@@ -48,6 +48,8 @@
     </md-card>
 </template>
 <script>
+    const params = require('../../_helpers/config.js');
+    const CONFIG = params.params; 
     export default {
         name: 'campaign-card',
         props: {
@@ -66,7 +68,7 @@
         },
         methods: {
             getImageSrc(img) {
-                return `http://18.136.119.81:3000/static/img/${img}`
+                return `${CONFIG.IMGURL}/${img}`
             },
             viewCampaign(id) {
                 let self = this;

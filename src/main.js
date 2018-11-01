@@ -11,6 +11,7 @@ import moment from 'moment-timezone'
 import VueGoodTablePlugin from 'vue-good-table';
 import VueElementLoading from 'vue-element-loading'
 import VueQrcode from '@xkeshi/vue-qrcode';
+import VueGallery from 'vue-gallery';
 
 // router setup
 import routes from './routes/routes'
@@ -46,6 +47,7 @@ Vue.use(VueMoment, {
 })
 Vue.component('VueElementLoading', VueElementLoading) 
 Vue.component(VueQrcode.name, VueQrcode);
+Vue.component( 'gallery', VueGallery)
 
 
 // global library setup

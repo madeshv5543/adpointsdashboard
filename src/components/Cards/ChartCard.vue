@@ -23,7 +23,7 @@
         </md-card-content>
         <div class="md-card-actions md-alignment-space-between">
             <div class="price">
-                <h4>{{campaign.value}}</h4>
+                <h4>{{campaign.value}} e-cash</h4>
             </div>
             <div class="stats">
                 <p class="category"><i class="md-icon md-icon-font md-theme-default">place</i>
@@ -34,6 +34,8 @@
     </md-card>
 </template>
 <script>
+    const params = require('../../_helpers/config.js');
+    const CONFIG = params.params;
     export default {
         name: 'chart-card',
         props: {
@@ -52,7 +54,7 @@
         },
         methods: {
             getImageSrc(img) {
-                return `http://18.136.119.81:3000/static/img/${img}`
+                return `${CONFIG.IMGURL}/${img}`
             },
             viewCampaign(id) {
                 let self = this;
