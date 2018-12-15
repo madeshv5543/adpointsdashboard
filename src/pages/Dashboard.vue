@@ -133,13 +133,13 @@
                         label: 'Start',
                         field: 'startdate',
                         type: 'date',
-                        dateOutputFormat: 'MMM Do YYYY',
+                       formatFn: this.formatDate,
                     },
                     {
                         label: 'End',
                         field: 'enddate',
                         type: 'date',
-                        dateOutputFormat: 'MMM Do YYYY',
+                        formatFn: this.formatDate,
                     },
                     {
                         label: 'Action',
@@ -162,6 +162,9 @@
                 self.$router.push({name:'viewCampaign', params: {
                    id:row._id
                }})
+            },
+            formatDate(str){
+                return this.$moment(str).format('DD MMM YYYY')
             }
         },
         computed: {
